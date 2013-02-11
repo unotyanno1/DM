@@ -3,11 +3,20 @@ class User extends AppModel
 {
 	public $useTable = 'users';
 
-	public function getUser( $id )
+	public function getUser( $user_id )
 	{
 		return $this->find( 'first', array(
 			'conditions' => array(
-				'id' => $id,
+				'id' => $user_id,
+			),
+		) );
+	}
+
+	public function getInviteUser( $invite_id )
+	{
+		return $this->find( 'first', array(
+			'conditions' => array(
+				'invite_id' => $invite_id,
 			),
 		) );
 	}
@@ -22,6 +31,11 @@ class User extends AppModel
 			$id
 		) );
 		return $id;
+	}
+
+	public function deleteUser( $user_id )
+	{
+		
 	}
 	
 	public function getRandId()

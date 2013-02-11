@@ -5,10 +5,10 @@ class UsersController extends AppController
 
 	public function get_user()
 	{
-		if( $this->request->query[ 'id' ] != null  ) 
+		if( $this->request->query[ 'user_id' ] != null  ) 
 		{
-			$id = $this->request->query[ 'id' ];
-			$results = $this->User->getUser( $id );
+			$user_id = $this->request->query[ 'user_id' ];
+			$results = $this->User->getUser( $user_id );
 			debug( $results );
 			//$this->set( 'results', $results );
 			//$this->viewClass = 'Json';

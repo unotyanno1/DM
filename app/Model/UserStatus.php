@@ -27,7 +27,7 @@ class UserStatus extends AppModel
 	
 	public function updateQuestProgress( $user_id, $quest_progress )
 	{
-		$sql = sprintf( 'update %s set quest_progress = ?, level = ? where user_id = ?', $this->useTable );
+		$sql = sprintf( 'update %s set quest_progress = ?, level = ?, modified = now() where user_id = ?', $this->useTable );
 		$this->query( $sql, array(
 			$quest_progress,
 			$quest_progress,

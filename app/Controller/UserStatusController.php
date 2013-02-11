@@ -9,6 +9,8 @@ class UserStatusController extends AppController
 		{
 			$user_id = $this->request->query[ 'user_id' ];
 			$results = $this->UserStatus->getStatus( $user_id );
+			$level_data = $this->Level->getLevelDesc( $results['UserStatus']['level'] );
+			$results['UserStatus']['level_description'] = $level_data['Level']['description'];
 			debug( $results );
 			//$this->set( 'results', $results );
 			//$this->viewClass = 'Json';
