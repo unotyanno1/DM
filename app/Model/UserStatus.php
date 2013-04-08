@@ -25,6 +25,17 @@ class UserStatus extends AppModel
 		) );
 	}
 	
+	public function UpdateStatus( $user_id, $lp, $atk, $rcr )
+	{
+		$sql = sprintf( 'update %s set level = level + 1, lp = lp + ?, atk = atk + ?, rcr = rcr + ?, quest_progress = quest_progress + 1, modified = now() where user_id = ?', $this->useTable );
+		return $this->query( $sql, array(
+			$lp,
+			$atk,
+			$rcr,
+			$user_id
+		) );
+	}
+	
 	public function updateQuestProgress( $user_id, $quest_progress )
 	{
 		$sql = sprintf( 'update %s set quest_progress = ?, level = ?, modified = now() where user_id = ?', $this->useTable );

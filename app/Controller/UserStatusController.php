@@ -23,6 +23,18 @@ class UserStatusController extends AppController
 		$this->UserStatus->addStatus( $user_id );
 	}
 	
+	public function update_status( )
+	{
+		if( $this->request->query[ 'user_id' ] != null && $this->request->query[ 'lp' ] != null && $this->request->query[ 'atk' ] != null && $this->request->query[ 'rcr' ] != null ) 
+		{
+			$user_id = $this->request->query[ 'user_id' ];
+			$lp = $this->request->query[ 'lp' ];
+			$atk = $this->request->query[ 'atk' ];
+			$rcr = $this->request->query[ 'rcr' ];
+			$this->UserStatus->UpdateStatus( $user_id, $lp, $atk, $rcr );
+		}
+	}
+	
 	public function update_quest_progress()
 	{
 		if( $this->request->query[ 'user_id' ] != null && $this->request->query[ 'quest_progress' ] != null  ) 

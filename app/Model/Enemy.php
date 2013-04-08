@@ -5,7 +5,7 @@ class Enemy extends AppModel
 
 	public function getEnemy( $floor )
 	{
-		return $this->find( 'first', array(
+		return $this->find( 'all', array(
 			'conditions' => array(
 				'floor' => $floor,
 			),
