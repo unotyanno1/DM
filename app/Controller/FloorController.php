@@ -21,8 +21,6 @@ class FloorController extends AppController
 		{
 			$user_id = $this->request->query[ 'user_id' ];
 			$floor = $this->request->query[ 'floor' ];
-			$number_logic = $this->GameNumberLogic->getGameNumberLogic( $floor );
-			$number_time_logic = $this->GameNumberTimeLogic->getGameNumberTimeLogic( $floor );
 			$heart_logic = $this->GameHeartLogic->getGameHeartLogic( $floor );
 			$heart_time_logic = $this->GameHeartTimeLogic->getGameHeartTimeLogic( $floor );
 			$bomb_logic = $this->GameBombLogic->getGameBombLogic( $floor );
@@ -32,14 +30,6 @@ class FloorController extends AppController
 			$user_status = $this->UserStatus->getStatus( $user_id );
 			$user_data = $this->User->getUser( $user_id );
 			$level_data = $this->Level->getLevelDesc( $user_status['UserStatus']['level'] );
-			foreach ( $number_logic as $i => $number )
-			{
-			        $number_logic_data['GameNumberLogic'][$i] = $number['GameNumberLogic'];
-			}
-			foreach ( $number_time_logic as $i => $number )
-			{
-			        $number_time_logic_data['GameNumberTimeLogic'][$i] = $number['GameNumberTimeLogic'];
-			}
 			if( $heart_logic != null )
 			{
 				foreach ( $heart_logic as $i => $heart )
@@ -76,8 +66,24 @@ class FloorController extends AppController
 				$results['Enemy'][] = $enemy['Enemy'];
 			}
 			$results['Level'] = $level_data['Level'];
-			$results['GameNumberLogic'] = $number_logic_data['GameNumberLogic'];
-			$results['GameNumberTimeLogic'] = $number_time_logic_data['GameNumberTimeLogic'];
+			for( $i=0; $i < count($enemy_data); $i++ ) 
+			{ 
+				$number_logic = $this->GameNumberLogic->getGameNumberLogic( $floor , $i+1 );
+				foreach ( $number_logic as $m => $number )
+				{
+					$number_logic_data['GameNumberLogic'][$m] = $number['GameNumberLogic'];
+				}
+				$results['GameNumberLogic'][] = $number_logic_data['GameNumberLogic'];
+				if( $enemy_data[$i]['Enemy']['random'] == 1 ) 
+				{
+					$number_time_logic = $this->GameNumberTimeLogic->getGameNumberTimeLogic( $floor, $i+1 );
+					foreach ( $number_time_logic as $k => $number )
+					{
+					$number_time_logic_data['GameNumberTimeLogic'][$k] = $number['GameNumberTimeLogic'];
+					}
+					$results['GameNumberTimeLogic'][] = $number_time_logic_data['GameNumberTimeLogic'];
+				}
+			}
 			//debug( $results );
 			$this->set( 'results', $results );
 			$this->viewClass = 'Json';
