@@ -3,7 +3,6 @@ class FloorController extends AppController
 {
 	public $uses = array( 
 		'GameNumberLogic',
-		'GameNumberTimeLogic',
 		'GameBombLogic',
 		'GameBombTimeLogic',
 		'GameHeartLogic',
@@ -43,19 +42,6 @@ class FloorController extends AppController
 				$results['GameHeartLogic'] = $heart_logic_data['GameHeartLogic'];
 				$results['GameHeartTimeLogic'] = $heart_time_logic_data['GameHeartTimeLogic'];
 			}
-			if( $bomb_logic != null )
-			{
-				foreach ( $bomb_logic as $i => $bomb )
-				{
-			        	$bomb_logic_data['GameBombLogic'][$i] = $bomb['GameBombLogic'];
-				}
-				foreach ( $bomb_time_logic as $i => $bomb )
-				{
-			        	$bomb_time_logic_data['GameBombTimeLogic'][$i] = $bomb['GameBombTimeLogic'];
-				}
-				$results['GameBombLogic'] = $bomb_logic_data['GameBombLogic'];
-				$results['GameBombTimeLogic'] = $bomb_time_logic_data['GameBombTimeLogic'];
-			}
 
 			$results['User'] = $user_data['User'];
 			$results['UserStatus'] = $user_status['UserStatus'];
@@ -74,15 +60,6 @@ class FloorController extends AppController
 					$number_logic_data['GameNumberLogic'][$m] = $number['GameNumberLogic'];
 				}
 				$results['GameNumberLogic'][] = $number_logic_data['GameNumberLogic'];
-				if( $enemy_data[$i]['Enemy']['random'] == 1 ) 
-				{
-					$number_time_logic = $this->GameNumberTimeLogic->getGameNumberTimeLogic( $floor, $i+1 );
-					foreach ( $number_time_logic as $k => $number )
-					{
-					$number_time_logic_data['GameNumberTimeLogic'][$k] = $number['GameNumberTimeLogic'];
-					}
-					$results['GameNumberTimeLogic'][] = $number_time_logic_data['GameNumberTimeLogic'];
-				}
 			}
 			//debug( $results );
 			$this->set( 'results', $results );

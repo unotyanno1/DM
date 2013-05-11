@@ -14,7 +14,26 @@ class UserStatus extends AppModel
 
 	public function addStatus( $user_id )
 	{
-		$sql = sprintf( 'insert into %s ( user_id, level, hp, attack, defense, quest_progress, created, modified ) values ( ?, ?, ?, ?, ?, ?, now(), now() )', $this->useTable );
+		$sql = sprintf( 'insert into %s 
+					( 
+						user_id, 
+						level, 
+						lp, 
+						atk, 
+						rcr, 
+						quest_progress, 
+						created, 
+						modified 
+					) values ( 
+						?, 
+						?, 
+						?, 
+						?, 
+						?, 
+						?, 
+						now(), 
+						now() )', 
+						$this->useTable );
 		return $this->query( $sql, array(
 			$user_id,
 			1,
@@ -27,7 +46,7 @@ class UserStatus extends AppModel
 	
 	public function UpdateStatus( $user_id, $lp, $atk, $rcr )
 	{
-		$sql = sprintf( 'update %s set level = level + 1, lp = lp + ?, atk = atk + ?, rcr = rcr + ?, quest_progress = quest_progress + 1, modified = now() where user_id = ?', $this->useTable );
+		$sql = sprintf( 'update %s set level = level, lp = lp + ?, atk = atk + ?, rcr = rcr + ?, quest_progress = quest_progress + 1, modified = now() where user_id = ?', $this->useTable );
 		return $this->query( $sql, array(
 			$lp,
 			$atk,
@@ -35,16 +54,19 @@ class UserStatus extends AppModel
 			$user_id
 		) );
 	}
-	
-	public function updateQuestProgress( $user_id, $quest_progress )
+
+	/*
+	 * クエスト進捗を更新する
+	 * @param	$user_id
+	 * @param	$floor		クリアしたフロアNo
+	 */
+	public function updateQuestProgress( $user_id, $floor )
 	{
-		$sql = sprintf( 'update %s set quest_progress = ?, level = ?, modified = now() where user_id = ?', $this->useTable );
+		$sql = sprintf( 'update %s set quest_progress = ?, modified = now() where user_id = ?', $this->useTable );
 		$this->query( $sql, array(
-			$quest_progress,
-			$quest_progress,
+			$floor,
 			$user_id
 		) );
-	
 	}
 }
 ?>
