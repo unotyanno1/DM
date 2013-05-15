@@ -63,7 +63,7 @@ class UsersController extends AppController
 			$json_data = $this->request->input('json_decode');
 			$this->log( $json_data );
 			$fb_friend_id_list = $json_data->fb_friend_list;
-			$this->log( $fb_friend_list );
+			$this->log( $fb_friend_id_list );
 			//$fb_friend_id_list = array( 100001002375020, 100002785140030, 100001963744175 );
 			$friend_data = $this->User->getUserFbId( $fb_friend_id_list );
 			//debug( $friend_data );
